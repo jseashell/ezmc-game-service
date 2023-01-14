@@ -9,6 +9,7 @@ provider:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
   stackTags:
+    Solution: {env:SOLUTION}
     Stage: ${opt:stage, 'dev'}
     Region: ${opt:region, 'us-east-1'}
 
@@ -49,10 +50,12 @@ resources:
     EntryPoint:
       Type: CommaDelimitedList
       Description: "Task entrypoint (Optional - image default is script /start)"
+      Default: ''
 
     Command:
       Type: CommaDelimitedList
       Description: "Task command (Optional - image default is empty)"
+      Default: '' 
 
     LogGroupName:
       Type: String
@@ -102,6 +105,7 @@ resources:
     MinecraftTypeTag:
       Type: String
       Description: "(Examples include SPIGOT, BUKKIT, TUINITY, etc) Refer to tag descriptions available here: https://github.com/itzg/docker-minecraft-server)"
+      Default: ''
 
     AdminPlayerNames:
       Type: String
@@ -136,6 +140,7 @@ resources:
     Seed:
       Type: String
       Description: The seed used to generate the world
+      Default: ''
 
     MaxPlayers:
       Type: Number
@@ -182,6 +187,7 @@ resources:
     Timezone:
       Type: String
       Description: "Change the server's timezone. Use the canonical name of the format: Area/Location (e.g. America/New_York)"
+      Default: America/New York
 
   Metadata:
     AWS::CloudFormation::Interface:
