@@ -24,5 +24,6 @@ build: false
 test: false
 
 deploy_script:
-  - sh: serverless deploy --stage $STAGE --region $REGION --verbose
+  - sh: serverless remove
+  # - sh: serverless deploy --stage $STAGE --region $REGION --verbose
       
