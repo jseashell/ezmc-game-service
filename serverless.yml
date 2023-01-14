@@ -105,7 +105,7 @@ resources:
     MinecraftTypeTag:
       Type: String
       Description: "(Examples include SPIGOT, BUKKIT, TUINITY, etc) Refer to tag descriptions available here: https://github.com/itzg/docker-minecraft-server)"
-      Default: ''
+      Default: 'vanilla'
 
     AdminPlayerNames:
       Type: String
