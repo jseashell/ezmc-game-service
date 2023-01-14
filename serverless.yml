@@ -9,7 +9,7 @@ provider:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
   stackTags:
-    Solution: {env:SOLUTION}
+    Solution: ${env:SOLUTION}
     Stage: ${opt:stage, 'dev'}
     Region: ${opt:region, 'us-east-1'}
 
