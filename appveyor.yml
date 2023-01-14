@@ -18,7 +18,7 @@ for:
       STAGE: main
 
 install:
-  - sh: curl -o- -L https://slss.io/install | bash
+  - sh: npm install -g serverless
 
 build: false
 test: false
