@@ -149,7 +149,7 @@ resources:
     ViewDistance:
       Type: Number
       Description: Max view radius (in chunks) the server will send to the client (default 10)
-      Default: -1
+      Default: 10
 
     GameMode:
       Type: String
