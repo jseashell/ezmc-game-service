@@ -1,17 +1,14 @@
-frameworkVersion: '3'
+service: ${self:provider.stackTags.Name}
 
-service: ${env:SOLUTION}
+frameworkVersion: '3'
 
 provider:
   name: aws
   stage: ${self:provider.stackTags.Stage}
   region: ${self:provider.stackTags.Region}
-  runtime: nodejs16.x
-  apiGateway:
-    minimumCompressionSize: 1024
-    shouldStartNameWithService: true
+  runtime: nodejs16.x # same as appveyor install
   stackTags:
-    Solution: ${env:SOLUTION}
+    Name: ${env:NAME}
     Stage: ${opt:stage, 'dev'}
     Region: ${opt:region, 'us-east-1'}
 

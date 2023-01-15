@@ -1,17 +1,17 @@
-# EZMC Game Server
+# EZMC Game Service
 
-Minecraft game server for the EZ-Money Crew
+EZ Minecraft game service responsible for hosting the latest Minecraft Java server edition.
 
 ## Deployment
 
-This game server is deployed as a Docker container to [AWS ECS](https://aws.amazon.com/ecs/). [Serverless Framework](https://www.serverless.com/framework/docs) leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources.
+This game service is deployed as a Docker container to [AWS ECS](https://aws.amazon.com/ecs/). [Serverless Framework](https://www.serverless.com/framework/docs) leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources.
 
 ### Manual
 
 To deploy manually from a dev workstation, install Serverless and run the `deploy` command.
 
 ```sh
-npm install -g serverless
+npm install -g serverless@3
 serverless deploy --verbose
 ```
 

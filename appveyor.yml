@@ -1,8 +1,8 @@
-version: 0.1.0.{build}
+version: 1.0.0.{build}
 image: Ubuntu
 
 environment:
-  SOLUTION: ezmc-game-server
+  NAME: ezmc-game-service
   STAGE: dev
   REGION: us-east-1
   AWS_ACCESS_KEY_ID:
@@ -18,7 +18,8 @@ for:
       STAGE: main
 
 install:
-  - sh: npm install -g serverless
+  - sh: nvm use 16 # same as serverless provider
+  - sh: npm install -g serverless@3
 
 build: false
 test: false
