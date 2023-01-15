@@ -144,7 +144,7 @@ resources:
     MaxPlayers:
       Type: Number
       Description: Max number of players that can connect simultaneously (default 20)
-      Default: -1
+      Default: 20
 
     ViewDistance:
       Type: Number
