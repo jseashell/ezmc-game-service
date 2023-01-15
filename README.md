@@ -1,6 +1,6 @@
 # EZMC Game Service
 
-EZ Minecraft game service responsible for hosting the latest Minecraft Java server edition.
+EZ Minecraft game service responsible for hosting the latest Minecraft Java server edition on an AWS ECS Cluster.
 
 ## Deployment
 
