@@ -11,6 +11,9 @@ provider:
     Name: ${env:NAME}
     Stage: ${opt:stage, 'dev'}
     Region: ${opt:region, 'us-east-1'}
+  environment:
+    STAGE: ${env:STAGE}
+    REGION: ${env:REGION}
 
 resources:
   Parameters:
