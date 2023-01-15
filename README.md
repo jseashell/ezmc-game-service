@@ -4,7 +4,7 @@ Service responsible for hosting the latest Minecraft Java server edition on an A
 
 ## Deployment
 
-This game service is deployed as a Docker container to [AWS ECS](https://aws.amazon.com/ecs/). [Serverless Framework](https://www.serverless.com/framework/docs) leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources.
+This game service is deployed in a container to [AWS ECS](https://aws.amazon.com/ecs/). [Serverless Framework](https://www.serverless.com/framework/docs) leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources.
 
 ### Manual
 
