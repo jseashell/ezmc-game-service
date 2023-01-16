@@ -1,6 +1,11 @@
 version: 1.0.0.{build}
 image: Ubuntu
 
+branches:
+  only:
+    - main
+    - feature/load-balancer
+    
 environment:
   NAME: ezmc-game-service
   STAGE: dev
