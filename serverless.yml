@@ -1,4 +1,4 @@
-service: ${self:provider.stackTags.Name}--${self:provider.stackTags.Client}
+service: ${self:provider.stackTags.Name}-${self:provider.stackTags.Client}
 frameworkVersion: '3'
 provider:
   name: aws
