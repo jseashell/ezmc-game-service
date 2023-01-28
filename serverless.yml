@@ -41,6 +41,8 @@ provider:
 
 package:
   individually: true
+  patterns:
+    - src/config/game-server.yml
 
 functions:
   down:
