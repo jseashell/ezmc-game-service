@@ -1,5 +1,5 @@
 const execShPromise = require('exec-sh').promise;
-import { formatJsonError, formatJsonResponse } from '../../lib/apiGateway';
+import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
 
 /**
  * Tears down a game server stack

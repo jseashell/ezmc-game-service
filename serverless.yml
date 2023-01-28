@@ -9,6 +9,9 @@ provider:
   region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'main'}
   runtime: nodejs16.x
+  stackTags:
+    Stage: ${self:provider.stage}
+    Region: ${self:provider.region}
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
@@ -20,24 +23,26 @@ provider:
     restApi:
       accessLogging: true
       executionLogging: true
-  stackTags:
-    Stage: ${self:provider.stage}
-    Region: ${self:provider.region}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'ec2:DescribeInstances'
+            - 'ecs:DescribeContainerInstances'
+            - 'ecs:DescribeServices'
+            - 'ecs:DescribeTasks'
+            - 'ecs:ListContainerInstances'
+            - 'ecs:ListServices'
+            - 'ecs:ListTasks'
+            - 'ecs:UpdateService'
+          Resource:
+            - '*'
 
 package:
   individually: true
 
 functions:
-  up:
-    handler: ./src/functions/up/handler.up
-    events:
-      - http:
-          path: up
-          method: post
-          cors: true
-          request:
-            schemas:
-              application/json: ${file(./src/functions/up/schema.json)}
   down:
     handler: ./src/functions/down/handler.down
     events:
@@ -48,3 +53,57 @@ functions:
           request:
             schemas:
               application/json: ${file(./src/functions/down/schema.json)}
+  publicIpAddress:
+    handler: src/functions/public-ip-address/handler.publicIpAddress
+    events:
+      - http:
+          path: publicIpAddress
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                clusterName: true
+  start:
+    handler: src/functions/start/handler.start
+    events:
+      - http:
+          path: start
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                clusterName: true
+  status:
+    handler: src/functions/status/handler.status
+    events:
+      - http:
+          path: status
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                clusterName: true
+  stop:
+    handler: src/functions/stop/handler.stop
+    events:
+      - http:
+          path: stop
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                clusterName: true
+  up:
+    handler: ./src/functions/up/handler.up
+    events:
+      - http:
+          path: up
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(./src/functions/up/schema.json)}

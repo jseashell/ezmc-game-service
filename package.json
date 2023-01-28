@@ -19,6 +19,8 @@
   "author": "John Schellinger",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-ec2": "^3.259.0",
+    "@aws-sdk/client-ecs": "^3.259.0",
     "exec-sh": "^0.4.0",
     "serverless": "^3.27.0"
   },
