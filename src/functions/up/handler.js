@@ -9,7 +9,7 @@ import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
 export const up = async (event) => {
     try {
         const out = await execShPromise(
-            `serverless deploy --config ../../config/game-server.yml --stage ${event.body.stage} --region ${event.body.region} --param="serverName=${event.body.serverName}" --param="accountId=${event.body.accountId}"`,
+            `serverless deploy --config src/config/game-server.yml --stage ${event.body.stage} --region ${event.body.region} --param="serverName=${event.body.serverName}" --param="accountId=${event.body.accountId}"`,
         );
 
         const clusterArn = '';

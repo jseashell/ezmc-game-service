@@ -9,7 +9,7 @@ import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
 export const down = async (event) => {
     try {
         const out = await execShPromise(
-            `serverless remove --config ../../config/game-server.yml --stage ${event.body.stage} --region ${event.body.region} --param="serverName=${event.body.serverName}" --param="accountId=${event.body.accountId}"`,
+            `serverless remove --config src/config/game-server.yml --stage ${event.body.stage} --region ${event.body.region} --param="serverName=${event.body.serverName}" --param="accountId=${event.body.accountId}"`,
         );
         return formatJsonResponse(out);
     } catch (err) {
