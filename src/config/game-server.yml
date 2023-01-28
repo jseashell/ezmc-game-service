@@ -8,8 +8,8 @@ provider:
   region: ${opt:region, 'us-east-1'}
   runtime: nodejs16.x
   stackTags:
-    ServerName: ${env:serverName}
-    Client: ${env:client}
+    ServerName: ${param:serverName}
+    Client: ${param:client}
     Stage: ${self:provider.stage}
     Region: ${self:provider.region}
 

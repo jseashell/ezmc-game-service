@@ -3,7 +3,7 @@ import { DescribeContainerInstancesCommand, ECSClient, ListContainerInstancesCom
 import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
 import { buildClusterArn } from '../../libs/ecs';
 
-export const publicIpAddress = async (event) => {
+export const ipAddress = async (event) => {
     const clusterName = event.queryStringParams.clusterName;
     const ecsClient = new ECSClient({ region: process.env.REGION });
 
@@ -33,9 +33,9 @@ export const publicIpAddress = async (event) => {
                                     }),
                                 )
                                 .then((res) => {
-                                    const publicIpAddress = res.Reservations?.[0].Instances?.[0].PublicIpAddress;
+                                    const ipAddress = res.Reservations?.[0].Instances?.[0].PublicIpAddress;
                                     return formatJsonResponse({
-                                        publicIpAddress: publicIpAddress,
+                                        ipAddress: ipAddress,
                                     });
                                 })
                                 .catch((err) => {
@@ -44,13 +44,13 @@ export const publicIpAddress = async (event) => {
                                 });
                         } else {
                             return formatJsonResponse({
-                                publicIpAddress: '',
+                                ipAddress: '',
                             });
                         }
                     });
             } else {
                 return formatJsonResponse({
-                    publicIpAddress: '',
+                    ipAddress: '',
                 });
             }
         })

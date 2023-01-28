@@ -53,11 +53,11 @@ functions:
           request:
             schemas:
               application/json: ${file(./src/functions/down/schema.json)}
-  publicIpAddress:
-    handler: src/functions/public-ip-address/handler.publicIpAddress
+  ipAddress:
+    handler: src/functions/ip-address/handler.ipAddress
     events:
       - http:
-          path: publicIpAddress
+          path: ipAddress
           method: get
           cors: true
           request:
