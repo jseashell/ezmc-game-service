@@ -1,0 +1,6 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"serverName\": \"test_server\", \"accountId\": \"00000001\"}"
+}
