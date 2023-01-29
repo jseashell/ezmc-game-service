@@ -2,8 +2,6 @@ version: 1.0.0.{build}
 image: Ubuntu
 
 environment:
-  NAME: ezmc-game-service
-  CLIENT: exampleClient
   STAGE: main
   REGION: us-east-1
   AWS_ACCESS_KEY_ID:
