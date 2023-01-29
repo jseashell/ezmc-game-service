@@ -3,6 +3,17 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-bundle
+  - serverless-s3-sync
+
+custom:
+  assetBucketName: ${self:service}-assets-${self:provider.stage}
+  s3Sync: # serverless-s3-sync
+    - bucketName: ${self:custom.assetBucketName}
+      localDir: /src/assets/stacks
+      deleteRemoved: true
+      bucketTags:
+        - Stage: ${self:provider.stage}
+        - Region: ${self:provider.region}
 
 provider:
   name: aws
@@ -12,12 +23,17 @@ provider:
   stackTags:
     Stage: ${self:provider.stage}
     Region: ${self:provider.region}
+  deploymentBucket:
+    name: deployments-${aws:accountId}-${self:provider.region}
+    blockPublicAccess: true
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    ASSET_BUCKET_NAME: ${self:custom.assetBucketName}
+    CF_GAME_SERVER_OBJECT_KEY: TODO
   logs:
     frameworkLambda: true
     restApi:
@@ -38,11 +54,15 @@ provider:
             - 'ecs:UpdateService'
           Resource:
             - '*'
+        - Effect: 'Allow'
+          Action:
+            - 's3:GetObject'
+            - 's3:PutObject'
+          Resource:
+            - 'arn:aws:s3:::${self:custom.assetBucketName}/*'
 
 package:
   individually: true
-  patterns:
-    - src/config/game-server.yml
 
 functions:
   down:
@@ -109,3 +129,15 @@ functions:
           request:
             schemas:
               application/json: ${file(./src/functions/up/schema.json)}
+
+resources:
+  Resources:
+    AssetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.assetBucketName}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
