@@ -10,12 +10,7 @@
         "type": "git",
         "url": "git+https://github.com/jseashell/ezmc-game-service.git"
     },
-    "keywords": [
-        "minecraft",
-        "java",
-        "mojang",
-        "server"
-    ],
+    "keywords": [],
     "author": "John Schellinger",
     "license": "MIT",
     "dependencies": {
