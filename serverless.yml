@@ -4,13 +4,6 @@ frameworkVersion: '3'
 plugins:
   - serverless-bundle
 
-custom:
-  s3:
-    templates:
-      bucket: ${env:AWS_S3_BUCKET_TEMPLATES}
-      key:
-        gameServer: ${env:AWS_S3_KEY_GAME_SERVER}
-
 provider:
   name: aws
   region: ${opt:region, 'us-east-1'}
@@ -19,9 +12,6 @@ provider:
   stackTags:
     Stage: ${self:provider.stage}
     Region: ${self:provider.region}
-  deploymentBucket:
-    name: deployments-${aws:accountId}-${self:provider.region}
-    blockPublicAccess: true
   apiGateway:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
@@ -52,7 +42,7 @@ provider:
           Action:
             - 's3:GetObject'
           Resource:
-            - 'arn:aws:s3:::${self:custom.s3.templates.bucket}/${self:custom.s3.templates.key.gameServer'
+            - 'arn:aws:s3:::ezmc-cf-templates/game-server.yml'
 
 package:
   individually: true
@@ -122,15 +112,3 @@ functions:
           request:
             schemas:
               application/json: ${file(./src/functions/up/schema.json)}
-
-resources:
-  Resources:
-    AssetsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.assetBucketName}
-        PublicAccessBlockConfiguration:
-          BlockPublicAcls: true
-          BlockPublicPolicy: true
-          IgnorePublicAcls: true
-          RestrictPublicBuckets: true
