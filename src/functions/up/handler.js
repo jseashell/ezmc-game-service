@@ -8,7 +8,7 @@ import { getGameServerTemplate } from '../../libs/s3';
  */
 export const up = async (event) => {
     try {
-        const template = getGameServerTemplate();
+        const template = await getGameServerTemplate();
         return formatJsonResponse(template);
     } catch (err) {
         console.error('Failed to stand up new game server', err);

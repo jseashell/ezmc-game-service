@@ -8,7 +8,7 @@ import { getGameServerTemplate } from '../../libs/s3';
  */
 export const down = async (event) => {
     try {
-        const template = getGameServerTemplate();
+        const template = await getGameServerTemplate();
         return formatJsonResponse(template);
     } catch (err) {
         console.error('Failed to teardown game server', err);
