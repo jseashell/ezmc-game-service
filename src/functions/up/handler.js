@@ -1,7 +1,5 @@
-const execShPromise = require('exec-sh').promise;
 import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
-
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'; // ES Modules import
+import { getGameServerTemplate } from '../../libs/s3';
 
 /**
  * Deploys and spins up a new game server stack
@@ -9,20 +7,11 @@ import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'; // ES Modules i
  * @returns Lambda proxy response
  */
 export const up = async (event) => {
-    const client = new S3Client({ region: process.env.REGION || 'us-east-1' });
-    const response = await client.send(
-        new GetObjectCommand({
-            bucket: process.env.ASSET_BUCKET_NAME,
-            key: process.env.CF_GAME_SERVER_OBJECT_KEY,
-        }),
-    );
-
     try {
-        return formatJsonResponse({
-            response,
-        });
+        const template = getGameServerTemplate();
+        return formatJsonResponse(template);
     } catch (err) {
-        console.error('Failed to deploy new game server', err, err.stderr);
+        console.error('Failed to stand up new game server', err);
         return formatJsonError(err);
     }
 };

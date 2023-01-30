@@ -3,17 +3,13 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-bundle
-  - serverless-s3-sync
 
 custom:
-  assetBucketName: ${self:service}-assets-${self:provider.stage}
-  s3Sync: # serverless-s3-sync
-    - bucketName: ${self:custom.assetBucketName}
-      localDir: /src/assets/stacks
-      deleteRemoved: true
-      bucketTags:
-        - Stage: ${self:provider.stage}
-        - Region: ${self:provider.region}
+  s3:
+    templates:
+      bucket: ${env:AWS_S3_BUCKET_TEMPLATES}
+      key:
+        gameServer: ${env:AWS_S3_KEY_GAME_SERVER}
 
 provider:
   name: aws
@@ -32,8 +28,6 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
     NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
-    ASSET_BUCKET_NAME: ${self:custom.assetBucketName}
-    CF_GAME_SERVER_OBJECT_KEY: TODO
   logs:
     frameworkLambda: true
     restApi:
@@ -57,9 +51,8 @@ provider:
         - Effect: 'Allow'
           Action:
             - 's3:GetObject'
-            - 's3:PutObject'
           Resource:
-            - 'arn:aws:s3:::${self:custom.assetBucketName}/*'
+            - 'arn:aws:s3:::${self:custom.s3.templates.bucket}/${self:custom.s3.templates.key.gameServer'
 
 package:
   individually: true

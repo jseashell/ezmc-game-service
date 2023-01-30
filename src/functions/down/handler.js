@@ -1,5 +1,5 @@
-const execShPromise = require('exec-sh').promise;
 import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
+import { getGameServerTemplate } from '../../libs/s3';
 
 /**
  * Tears down a game server stack
@@ -8,12 +8,10 @@ import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
  */
 export const down = async (event) => {
     try {
-        const out = await execShPromise(
-            `serverless remove --config src/config/game-server.yml --stage ${event.body.stage} --region ${event.body.region} --param="serverName=${event.body.serverName}" --param="accountId=${event.body.accountId}"`,
-        );
-        return formatJsonResponse(out);
+        const template = getGameServerTemplate();
+        return formatJsonResponse(template);
     } catch (err) {
-        console.error('Failed to teardown game server', err, err.stderr);
+        console.error('Failed to teardown game server', err);
         return formatJsonError(err);
     }
 };

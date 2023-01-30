@@ -1,7 +1,7 @@
 import { DescribeServicesCommand, ECSClient, ListServicesCommand } from '@aws-sdk/client-ecs';
 
 /**
- * Gets the arn of the firstservice for the given cluster
+ * Gets the arn of the first service for the given cluster
  * @param {string} clusterName
  * @returns {string} service arn
  */
