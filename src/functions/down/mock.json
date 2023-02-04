@@ -2,5 +2,5 @@
     "headers": {
         "Content-Type": "application/json"
     },
-    "body": "{\"serverName\": \"test_server\", \"accountId\": \"00000001\"}"
+    "body": "{ \"accountId\": \"00000001\", \"serverName\": \"test_server\",}"
 }

@@ -15,16 +15,6 @@ export const down = async (event) => {
     const command = new DeleteStackCommand({
         StackName: `ezmc-${accountId}-${serverName}`,
         TemplateURL: 's3://ezmc-cf-templates/game-server.yml',
-        Tags: [
-            {
-                Key: 'AccountId',
-                Value: accountId,
-            },
-            {
-                Key: 'ServerName',
-                Value: serverName,
-            },
-        ],
     });
 
     return client

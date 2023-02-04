@@ -1,10 +1,8 @@
 {
     "type": "object",
     "properties": {
-        "serverName": { "type": "string" },
         "accountId": { "type": "string" },
-        "region": { "type": "string" },
-        "stage": { "type": "string" }
+        "serverName": { "type": "string" }
     },
-    "required": ["serverName", "accountId", "region", "stage"]
+    "required": ["accountId", "serverName"]
 }
