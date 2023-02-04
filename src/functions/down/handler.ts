@@ -1,11 +1,11 @@
 import { CloudFormationClient, DeleteStackCommand } from '@aws-sdk/client-cloudformation';
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
+import type { ValidatedEventApiGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJsonError, formatJsonResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
-const down: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const down: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
   const accountId = event.body.accountId;
   const serverName = event.body.serverName;
 

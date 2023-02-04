@@ -1,11 +1,11 @@
 import { CloudFormationClient, CreateStackCommand } from '@aws-sdk/client-cloudformation';
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
+import type { ValidatedEventApiGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJsonError, formatJsonResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
-const up: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const up: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
   const accountId = event.body.accountId;
   console.log('up::accountId', accountId);
 

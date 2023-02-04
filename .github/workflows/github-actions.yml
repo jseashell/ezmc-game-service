@@ -16,5 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
-      - run: npm ci
+      - run: npm ci --silent
+      - run: npm run check
+      - run: npm run lint
       - run: npx serverless deploy --stage $STAGE --region $REGION --verbose

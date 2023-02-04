@@ -2,6 +2,4 @@
 .webpack
 .vscode
 node_modules
-
-.DS_Store
-.code-workspace
+package-lock.json

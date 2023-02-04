@@ -46,3 +46,14 @@ export const getServiceName = async (clusterName: string) => {
 export const buildClusterArn = (clusterName: string) => {
   return `arn:aws:ecs:${process.env.REGION}:${process.env.AWS_ACCOUNT_ID}:cluster/${clusterName}`;
 };
+
+/**
+ * Formats the given accountId and server name into a valid stack name (alphanumeric, only hyphens)
+ * @param accountId
+ * @param serverName
+ * @return normalized stack name
+ */
+export const formatStackName = (accountId: string, serverName: string): string => {
+  const normalizedServerName = serverName.toLowerCase().replaceAll('_', '-').replaceAll(' ', '-');
+  return `${accountId}-${normalizedServerName}`;
+};
