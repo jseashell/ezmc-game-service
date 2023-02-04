@@ -1,5 +1,5 @@
+import { CloudFormationClient, CreateStackCommand } from '@aws-sdk/client-cloudformation';
 import { formatJsonError, formatJsonResponse } from '../../libs/apiGateway';
-import { getGameServerTemplate } from '../../libs/s3';
 
 /**
  * Deploys and spins up a new game server stack
@@ -7,11 +7,36 @@ import { getGameServerTemplate } from '../../libs/s3';
  * @returns Lambda proxy response
  */
 export const up = async (event) => {
-    try {
-        const template = await getGameServerTemplate();
-        return formatJsonResponse(template);
-    } catch (err) {
-        console.error('Failed to stand up new game server', err);
-        return formatJsonError(err);
-    }
+    const accountId = event.body.accountId;
+    const serverName = event.body.serverName;
+
+    const client = new CloudFormationClient({ region: process.env.REGION });
+
+    const command = new CreateStackCommand({
+        StackName: `ezmc-${accountId}-${serverName}`,
+        TemplateURL: 's3://ezmc-cf-templates/game-server.yml',
+        Tags: [
+            {
+                Key: 'AccountId',
+                Value: accountId,
+            },
+            {
+                Key: 'ServerName',
+                Value: serverName,
+            },
+        ],
+    });
+
+    return client
+        .send(command)
+        .then((res) => {
+            return formatJsonResponse({
+                message: 'Success',
+                data: res,
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            return formatJsonError(err);
+        });
 };
