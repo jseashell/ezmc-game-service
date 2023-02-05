@@ -36,6 +36,8 @@ const serverlessConfiguration: AWS = {
           {
             Effect: 'Allow',
             Action: [
+              'cloudformation:CreateStack',
+              'cloudformation:DeleteStack',
               'ec2:DescribeInstances',
               'ecs:DescribeContainerInstances',
               'ecs:DescribeServices',
