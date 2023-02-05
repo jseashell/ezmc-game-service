@@ -1,18 +1,15 @@
 import { CloudFormationClient, CreateStackCommand } from '@aws-sdk/client-cloudformation';
 import type { ValidatedEventApiGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJsonError, formatJsonResponse } from '@libs/api-gateway';
+import { formatStackName } from '@libs/ecs';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
 const up: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
   const accountId = event.body.accountId;
-  console.log('up::accountId', accountId);
-
   const serverName = event.body.serverName;
-  console.log('up::serverName', serverName);
-
-  const stackName = `ezmc-${accountId}-${serverName}`;
+  const stackName = formatStackName(accountId, serverName);
 
   const client = new CloudFormationClient({ region: process.env.REGION });
   return client

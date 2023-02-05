@@ -55,5 +55,5 @@ export const buildClusterArn = (clusterName: string) => {
  */
 export const formatStackName = (accountId: string, serverName: string): string => {
   const normalizedServerName = serverName.toLowerCase().replaceAll('_', '-').replaceAll(' ', '-');
-  return `${accountId}-${normalizedServerName}`;
+  return `ezmc-${accountId}-${normalizedServerName}`;
 };
