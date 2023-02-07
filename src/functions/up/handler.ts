@@ -16,7 +16,7 @@ const up: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
     .send(
       new CreateStackCommand({
         StackName: stackName,
-        TemplateURL: 's3://ezmc-cf-templates/game-server.yml',
+        TemplateURL: 'https://ezmc-cf-templates.s3.amazonaws.com/game-server.yml',
         Tags: [
           {
             Key: 'AccountId',
