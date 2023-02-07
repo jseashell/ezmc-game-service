@@ -38,6 +38,7 @@ const serverlessConfiguration: AWS = {
             Action: [
               'cloudformation:CreateStack',
               'cloudformation:DeleteStack',
+              'ec2:DescribeImages',
               'ec2:DescribeInstances',
               'ecs:DescribeContainerInstances',
               'ecs:DescribeServices',
