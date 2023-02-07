@@ -1,4 +1,4 @@
-import { CloudFormationClient, CreateStackCommand } from '@aws-sdk/client-cloudformation';
+import { Capability, CloudFormationClient, CreateStackCommand } from '@aws-sdk/client-cloudformation';
 import type { ValidatedEventApiGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJsonError, formatJsonResponse } from '@libs/api-gateway';
 import { formatStackName } from '@libs/ecs';
@@ -16,6 +16,7 @@ const up: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
     .send(
       new CreateStackCommand({
         StackName: stackName,
+        Capabilities: [Capability.CAPABILITY_IAM],
         TemplateURL: 'https://ezmc-cf-templates.s3.amazonaws.com/game-server.yml',
         Tags: [
           {
