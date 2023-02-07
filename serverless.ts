@@ -46,6 +46,7 @@ const serverlessConfiguration: AWS = {
               'ecs:ListServices',
               'ecs:ListTasks',
               'ecs:UpdateService',
+              'ssm:GetParameters',
             ],
             Resource: ['*'],
           },
