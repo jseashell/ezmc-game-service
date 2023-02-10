@@ -29,18 +29,11 @@ provider:
       statements:
         - Effect: Allow
           Action:
-            - 'cloudformation:CreateStack'
-            - 'cloudformation:DeleteStack'
-            - 'ec2:DescribeImages'
-            - 'ec2:DescribeInstances'
-            - 'ecs:DescribeContainerInstances'
-            - 'ecs:DescribeServices'
-            - 'ecs:DescribeTasks'
-            - 'ecs:ListContainerInstances'
-            - 'ecs:ListServices'
-            - 'ecs:ListTasks'
-            - 'ecs:UpdateService'
-            - 'ssm:GetParameters'
+            - 'cloudformation:*'
+            - 'ec2:*'
+            - 'ecs:*'
+            - 'elasticfilesystem:*'
+            - 'ssm:*'
           Resource:
             - '*'
         - Effect: Allow
