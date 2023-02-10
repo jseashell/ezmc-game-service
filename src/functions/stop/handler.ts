@@ -1,12 +1,10 @@
 import { ECSClient, UpdateServiceCommand } from '@aws-sdk/client-ecs';
-import type { ValidatedEventApiGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJsonError, formatJsonResponse } from '@libs/api-gateway';
 import { buildClusterArn, getServiceName } from '@libs/ecs';
 import { middyfy } from '@libs/lambda';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult, Handler } from 'aws-lambda';
 
-import schema from './schema';
-
-const stop: ValidatedEventApiGatewayProxyEvent<typeof schema> = async (event) => {
+const stop: Handler<APIGatewayProxyEvent, APIGatewayProxyResult> = async (event) => {
   const client = new ECSClient({ region: process.env.REGION });
   const clusterName = event.queryStringParameters.clusterName;
 
