@@ -1,0 +1,6 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"clusterName\": \"ezmc-00000001-test-server\"}"
+}
