@@ -22,13 +22,22 @@ npm run offline
 Listening on port 3000
 ```
 
-Create your first user
+Spin up the first game server
 
 ```sh
 curl localhost:3000/main/up \
   -X POST \
   -H 'Content-Type: application/json' \
   -d '{"accountId": "00000001", "serverName": "Test Server"}'
+```
+
+Get the server IP address
+
+```sh
+curl localhost:3000/main/ipAddress \
+  -X GET \
+  -H 'Content-Type: application/json' \
+  -d '{"clusterName": "ecs_cluster_name"}'
 ```
 
 ## API
