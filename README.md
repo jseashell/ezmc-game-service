@@ -1,27 +1,58 @@
 # EZMC Game Service
 
-EZ Minecraft game service responsible for hosting the latest Minecraft Java server edition.
+Game management service for the EZ Minecraft stack via RESTful API.
+
+## Install
+
+```sh
+git clone https://github.com/jseashell/ezmc-game-service.git
+cd ezmc-game-service
+npm install
+```
+
+> Requires Node.js v18+. If using [nvm](https://nvm.sh), run `nvm use` to setup Node.js.
+
+## Running the App
+
+Emulate the AWS environment offline locally and request the API
+
+```sh
+npm run offline
+...
+Listening on port 3000
+```
+
+Create your first user
+
+```sh
+curl localhost:3000/main/up \
+  -X POST \
+  -H 'Content-Type: application/json' \
+  -d '{"accountId": "00000001", "serverName": "Test Server"}'
+```
+
+## API
+
+|Endpoint|Method|Description|Request|Response|
+|--------|------|-----------|-------|--------|
+|`/down`|`POST`|Tears down a game server. Data is not retained.|<pre>{<br/>  "accountId": "000001",<br/>  "serverName: "Test Server"<br/>}</pre>|<pre>{<br/>  "message": "Success",<br/>  "data": ...<br/>}</pre>|
+|`/ipAddress`|`GET`|Gets the public IP address for a game server.|<pre>?clusterName=000001</pre>|<pre>{<br/>  "ipAddress": "192.168.0.1"<br/>}</pre>|
+|`/start`|`POST`|Starts an existing game server that is stopped.|<pre>{<br/>  "clusterName": "ecs_cluster_name",<br/>}</pre>|<pre>{<br/>  "message": "Success",<br/>  "data": ...<br/>}</pre>|
+|`/status`|`GET`|Gets the running status for a game server.|<pre>?clusterName=000001</pre>|<pre>{<br/>  "ipAddress": "192.168.0.1"<br/>}</pre>|
+|`/stop`|`POST`|Stops an existing game server that is running.|<pre>{<br/>  "clusterName": "ecs_cluster_name",<br/>}</pre>|<pre>{<br/>  "message": "Success",<br/>  "data": ...<br/>}</pre>|
+|`/up`|`POST`|Spins up a new game server|<pre>{<br/>  "accountId": "000001",<br/>  "serverName: "Test Server"<br/>}</pre>|<pre>{<br/>  "message": "Success",<br/>  "data": ...<br/>}</pre>|
 
 ## Deployment
 
-This game service is deployed as a Docker container to [AWS ECS](https://aws.amazon.com/ecs/). [Serverless Framework](https://www.serverless.com/framework/docs) leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources.
-
-### Manual
-
-To deploy manually from a dev workstation, install Serverless and run the `deploy` command.
+This microservice is deployed using [Serverless Framework](https://www.serverless.com/framework/docs), which leverages a [Cloudformation template](https://aws.amazon.com/cloudformation/resources/templates/) to provision cloud resources for supporting this REST API.
 
 ```sh
-npm install -g serverless
-serverless deploy --stage $STAGE --region $REGION --verbose
+npx serverless deploy --stage $STAGE --region $REGION --verbose
 ```
 
-Optionally include `$STAGE` and `REGION`, the deployment will be staged as `main` to the `us-east-1` region.
+> `$STAGE` and `$REGION` are optional. The deployment will be staged as `main` to the `us-east-1` region.
 
-### CI/CD
-
-This server can be deployed with [AppVeyor](https://www.appveyor.com/docs/getting-started-with-appveyor-for-linux/).
-
-You must update `appveyor.yml` with your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. It is recommended that you use [secure variables](https://www.appveyor.com/docs/build-configuration/#:~:text=Secure%20variables,-When%20you%20work&text=AppVeyor%20generates%20a%20unique%20encryption,Account%20%E2%86%92%20Encrypt%20YAML%20page.&text=%E2%80%9CSecure%E2%80%9D%20variables%20means%20you%20can,that%20is%20visible%20to%20others.) for these secrets.
+Deployment is executed by [Github Actions](https://docs.github.com/en/actions). See [github-actions.yml](./.github/workflows/github-actions.yml) for configuration.
 
 ## Project structure
 
@@ -29,19 +60,23 @@ The project code base is mainly located within the `src` folder.
 
 ```text
 .
+├── .github                # CI/CD config
+├── .husky                 # Git hooks
 ├── src
 │   ├── functions          # Lambda functions
 │   └── libs               # Shared code
-├── stacks                 # Cloudformation stacks
+├── .eslintrc.js           # Lint config
 ├── .gitignore
-├── .nvmrc                 # NVM configuration
-├── .prettierrc.yml        # Code style configuration
-├── appveyor.yml           # CI/CD configuration
+├── .nvmrc                 # NVM config
+├── .prettierignore        # Code style ignore patterns
+├── .prettierrc.yml        # Code style config
 ├── LICENSE
 ├── package-lock.json
 ├── package.json
 ├── README.md
-└── serverless.yml         # Serverless configuration
+├── serverless.ts          # Serverless config
+├── tsconfig.json          # Typescript config
+└── tsconfig.paths.json    # Typescript import path shortcuts
 ```
 
 ## License
